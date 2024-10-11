@@ -83,22 +83,35 @@
         { english: "the year", spanish: "el año" },
       ];
 
-      let currentWords = classroomWords;
-      let currentIndex = Math.floor(Math.random() * currentWords.length);
+      let selectedWords = [];
 
       function loadWord() {
+        if (selectedWords.length === 0) {
+          document.querySelector(".english").innerText =
+            "Please select at least one category.";
+          return;
+        }
         const wordCard = document.querySelector(".word-card");
+        const randomIndex = Math.floor(Math.random() * selectedWords.length);
         wordCard.querySelector(".english").innerText =
-          currentWords[currentIndex].english;
+          selectedWords[randomIndex].english;
         wordCard.querySelector("input").value = "";
+        wordCard.dataset.currentIndex = randomIndex;
       }
 
       function checkAnswer() {
         const input = document.querySelector(".word-card input");
         const feedback = document.querySelector(".feedback");
+        if (selectedWords.length === 0) {
+          feedback.innerText = "Please select at least one category.";
+          feedback.style.color = "red";
+          return;
+        }
+        const currentIndex =
+          document.querySelector(".word-card").dataset.currentIndex;
         if (
           input.value.trim().toLowerCase() ===
-          currentWords[currentIndex].spanish.toLowerCase()
+          selectedWords[currentIndex].spanish.toLowerCase()
         ) {
           feedback.innerText = "Correct!";
           feedback.style.color = "green";
@@ -113,7 +126,9 @@
 
       function showHint(userInput) {
         const feedback = document.querySelector(".feedback");
-        const correctAnswer = currentWords[currentIndex].spanish;
+        const currentIndex =
+          document.querySelector(".word-card").dataset.currentIndex;
+        const correctAnswer = selectedWords[currentIndex].spanish;
         let hint = "";
         for (let i = 0; i < correctAnswer.length; i++) {
           if (
@@ -130,20 +145,16 @@
       }
 
       function nextWord() {
-        currentIndex = Math.floor(Math.random() * currentWords.length);
         loadWord();
         document.querySelector(".feedback").innerText = "";
       }
 
       function previousWord() {
-        currentIndex =
-          (currentIndex - 1 + currentWords.length) % currentWords.length;
         loadWord();
         document.querySelector(".feedback").innerText = "";
       }
 
       function resetWord() {
-        currentIndex = Math.floor(Math.random() * currentWords.length);
         loadWord();
         document.querySelector(".feedback").innerText = "";
       }
@@ -154,28 +165,19 @@
         input.focus();
       }
 
-      function changeTab(tabName) {
-        if (tabName === "classroom") {
-          currentWords = classroomWords;
-        } else if (tabName === "time") {
-          currentWords = timeWords;
+      function updateSelectedWords() {
+        selectedWords = [];
+        if (document.getElementById("classroomCheckbox").checked) {
+          selectedWords = selectedWords.concat(classroomWords);
         }
-        currentIndex = Math.floor(Math.random() * currentWords.length);
+        if (document.getElementById("timeCheckbox").checked) {
+          selectedWords = selectedWords.concat(timeWords);
+        }
         loadWord();
-
-        document
-          .querySelectorAll(".tab")
-          .forEach((tab) => tab.classList.remove("active"));
-        document
-          .querySelector(`.tab[data-tab="${tabName}"]`)
-          .classList.add("active");
       }
 
       document.addEventListener("DOMContentLoaded", () => {
-        loadWord();
-        document
-          .querySelector('.tab[data-tab="classroom"]')
-          .classList.add("active");
+        updateSelectedWords();
       });
     </script>
   </head>
@@ -183,14 +185,24 @@
     <div class="container">
       <h1>Spanish Practice</h1>
       <div class="tabs">
-        <div class="tab" data-tab="classroom" onclick="changeTab('classroom')">
-          Classroom Objects
-        </div>
-        <div class="tab" data-tab="time" onclick="changeTab('time')">
-          Days, Months, Years
-        </div>
+        <label
+          ><input
+            type="checkbox"
+            id="classroomCheckbox"
+            onclick="updateSelectedWords()"
+          />
+          Classroom Objects</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            id="timeCheckbox"
+            onclick="updateSelectedWords()"
+          />
+          Days, Months, Years</label
+        >
       </div>
-      <div class="word-card">
+      <div class="word-card" data-current-index="0">
         <div class="english"></div>
         <div class="input-area">
           <input type="text" placeholder="Type the Spanish translation" />
