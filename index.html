@@ -39,9 +39,26 @@
         padding: 5px;
         font-size: 1em;
       }
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .tab {
+        padding: 10px;
+        background-color: #ddd;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .tab.active {
+        background-color: #bbb;
+      }
+      .hidden {
+        display: none;
+      }
     </style>
     <script>
-      const words = [
+      const classroomWords = [
         { english: "the pen", spanish: "el bolígrafo" },
         { english: "the folder", spanish: "la carpeta" },
         { english: "the notebook", spanish: "el cuaderno" },
@@ -54,6 +71,9 @@
         { english: "the female teacher", spanish: "la profesora" },
         { english: "the student desk", spanish: "el pupitre" },
         { english: "the classroom", spanish: "la sala de clases" },
+      ];
+
+      const timeWords = [
         { english: "today", spanish: "hoy" },
         { english: "tomorrow", spanish: "mañana" },
         { english: "yesterday", spanish: "ayer" },
@@ -63,12 +83,13 @@
         { english: "the year", spanish: "el año" },
       ];
 
-      let currentIndex = 0;
+      let currentWords = classroomWords;
+      let currentIndex = Math.floor(Math.random() * currentWords.length);
 
       function loadWord() {
         const wordCard = document.querySelector(".word-card");
         wordCard.querySelector(".english").innerText =
-          words[currentIndex].english;
+          currentWords[currentIndex].english;
         wordCard.querySelector("input").value = "";
       }
 
@@ -77,18 +98,52 @@
         const feedback = document.querySelector(".feedback");
         if (
           input.value.trim().toLowerCase() ===
-          words[currentIndex].spanish.toLowerCase()
+          currentWords[currentIndex].spanish.toLowerCase()
         ) {
           feedback.innerText = "Correct!";
           feedback.style.color = "green";
         } else {
-          feedback.innerText = `Incorrect. The correct answer is: ${words[currentIndex].spanish}`;
-          feedback.style.color = "red";
+          if (confirm("Incorrect. Would you like a hint?")) {
+            showHint(input.value);
+          } else {
+            feedback.innerText = "";
+          }
         }
       }
 
+      function showHint(userInput) {
+        const feedback = document.querySelector(".feedback");
+        const correctAnswer = currentWords[currentIndex].spanish;
+        let hint = "";
+        for (let i = 0; i < correctAnswer.length; i++) {
+          if (
+            userInput[i] &&
+            userInput[i].toLowerCase() === correctAnswer[i].toLowerCase()
+          ) {
+            hint += correctAnswer[i];
+          } else {
+            hint += "_";
+          }
+        }
+        feedback.innerText = `Hint: ${hint}`;
+        feedback.style.color = "orange";
+      }
+
       function nextWord() {
-        currentIndex = (currentIndex + 1) % words.length;
+        currentIndex = Math.floor(Math.random() * currentWords.length);
+        loadWord();
+        document.querySelector(".feedback").innerText = "";
+      }
+
+      function previousWord() {
+        currentIndex =
+          (currentIndex - 1 + currentWords.length) % currentWords.length;
+        loadWord();
+        document.querySelector(".feedback").innerText = "";
+      }
+
+      function resetWord() {
+        currentIndex = Math.floor(Math.random() * currentWords.length);
         loadWord();
         document.querySelector(".feedback").innerText = "";
       }
@@ -99,18 +154,50 @@
         input.focus();
       }
 
-      document.addEventListener("DOMContentLoaded", loadWord);
+      function changeTab(tabName) {
+        if (tabName === "classroom") {
+          currentWords = classroomWords;
+        } else if (tabName === "time") {
+          currentWords = timeWords;
+        }
+        currentIndex = Math.floor(Math.random() * currentWords.length);
+        loadWord();
+
+        document
+          .querySelectorAll(".tab")
+          .forEach((tab) => tab.classList.remove("active"));
+        document
+          .querySelector(`.tab[data-tab="${tabName}"]`)
+          .classList.add("active");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadWord();
+        document
+          .querySelector('.tab[data-tab="classroom"]')
+          .classList.add("active");
+      });
     </script>
   </head>
   <body>
     <div class="container">
       <h1>Spanish Practice</h1>
+      <div class="tabs">
+        <div class="tab" data-tab="classroom" onclick="changeTab('classroom')">
+          Classroom Objects
+        </div>
+        <div class="tab" data-tab="time" onclick="changeTab('time')">
+          Days, Months, Years
+        </div>
+      </div>
       <div class="word-card">
         <div class="english"></div>
         <div class="input-area">
           <input type="text" placeholder="Type the Spanish translation" />
           <button onclick="checkAnswer()">Check</button>
           <button onclick="nextWord()">Next</button>
+          <button onclick="previousWord()">Back</button>
+          <button onclick="resetWord()">Reset</button>
         </div>
       </div>
       <div class="feedback"></div>
