@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spanish Practice Site</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .word-card {
+        margin: 15px 0;
+      }
+      .english {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+      }
+      .input-area {
+        display: flex;
+        gap: 10px;
+      }
+      button {
+        padding: 5px;
+        font-size: 1em;
+        cursor: pointer;
+      }
+      input {
+        flex: 1;
+        padding: 5px;
+        font-size: 1em;
+      }
+    </style>
+    <script>
+      const words = [
+        { english: "the pen", spanish: "el bolígrafo" },
+        { english: "the folder", spanish: "la carpeta" },
+        { english: "the notebook", spanish: "el cuaderno" },
+        { english: "the male student", spanish: "el estudiante" },
+        { english: "the female student", spanish: "la estudiante" },
+        { english: "the sheet of paper", spanish: "la hoja de papel" },
+        { english: "the pencil", spanish: "el lápiz" },
+        { english: "the book", spanish: "el libro" },
+        { english: "the male teacher", spanish: "el profesor" },
+        { english: "the female teacher", spanish: "la profesora" },
+        { english: "the student desk", spanish: "el pupitre" },
+        { english: "the classroom", spanish: "la sala de clases" },
+        { english: "today", spanish: "hoy" },
+        { english: "tomorrow", spanish: "mañana" },
+        { english: "yesterday", spanish: "ayer" },
+        { english: "the day", spanish: "el día" },
+        { english: "the week", spanish: "la semana" },
+        { english: "the month", spanish: "el mes" },
+        { english: "the year", spanish: "el año" },
+      ];
+
+      let currentIndex = 0;
+
+      function loadWord() {
+        const wordCard = document.querySelector(".word-card");
+        wordCard.querySelector(".english").innerText =
+          words[currentIndex].english;
+        wordCard.querySelector("input").value = "";
+      }
+
+      function checkAnswer() {
+        const input = document.querySelector(".word-card input");
+        const feedback = document.querySelector(".feedback");
+        if (
+          input.value.trim().toLowerCase() ===
+          words[currentIndex].spanish.toLowerCase()
+        ) {
+          feedback.innerText = "Correct!";
+          feedback.style.color = "green";
+        } else {
+          feedback.innerText = `Incorrect. The correct answer is: ${words[currentIndex].spanish}`;
+          feedback.style.color = "red";
+        }
+      }
+
+      function nextWord() {
+        currentIndex = (currentIndex + 1) % words.length;
+        loadWord();
+        document.querySelector(".feedback").innerText = "";
+      }
+
+      function insertSpecialChar(char) {
+        const input = document.querySelector(".word-card input");
+        input.value += char;
+        input.focus();
+      }
+
+      document.addEventListener("DOMContentLoaded", loadWord);
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Spanish Practice</h1>
+      <div class="word-card">
+        <div class="english"></div>
+        <div class="input-area">
+          <input type="text" placeholder="Type the Spanish translation" />
+          <button onclick="checkAnswer()">Check</button>
+          <button onclick="nextWord()">Next</button>
+        </div>
+      </div>
+      <div class="feedback"></div>
+      <div class="special-chars">
+        <h3>Special Characters</h3>
+        <button onclick="insertSpecialChar('ñ')">ñ</button>
+        <button onclick="insertSpecialChar('á')">á</button>
+        <button onclick="insertSpecialChar('é')">é</button>
+        <button onclick="insertSpecialChar('í')">í</button>
+        <button onclick="insertSpecialChar('ó')">ó</button>
+        <button onclick="insertSpecialChar('ú')">ú</button>
+      </div>
+    </div>
+  </body>
+</html>
