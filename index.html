@@ -111,6 +111,20 @@
         { english: "the year", spanish: "el año", wrongAttempts: 0 },
       ];
 
+      const colors = [
+        { english: "red", spanish: "rojo", wrongAttempts: 0 },
+        { english: "blue", spanish: "azul", wrongAttempts: 0 },
+        { english: "green", spanish: "verde", wrongAttempts: 0 },
+        { english: "yellow", spanish: "amarillo", wrongAttempts: 0 },
+        { english: "purple", spanish: "morado", wrongAttempts: 0 },
+        { english: "orange", spanish: "anaranjado", wrongAttempts: 0 },
+        { english: "pink", spanish: "rosado", wrongAttempts: 0 },
+        { english: "brown", spanish: "café", wrongAttempts: 0 },
+        { english: "black", spanish: "negro", wrongAttempts: 0 },
+        { english: "white", spanish: "blanco", wrongAttempts: 0 },
+        { english: "gray", spanish: "gris", wrongAttempts: 0 },
+      ];
+
       let selectedWords = [];
 
       function loadWord() {
@@ -147,6 +161,9 @@
         ) {
           feedback.innerText = "Correct!";
           feedback.style.color = "green";
+          if (currentWord.wrongAttempts > 0) {
+            currentWord.wrongAttempts--;
+          }
         } else {
           currentWord.wrongAttempts++;
           if (confirm("Incorrect. Would you like a hint?")) {
@@ -154,8 +171,8 @@
           } else {
             feedback.innerText = "";
           }
-          logWordChance();
         }
+        logWordChance();
       }
 
       function showHint(userInput) {
@@ -197,6 +214,9 @@
         if (document.getElementById("timeCheckbox").checked) {
           selectedWords = selectedWords.concat(timeWords);
         }
+        if (document.getElementById("colorsCheckbox").checked) {
+          selectedWords = selectedWords.concat(colors);
+        }
         loadWord();
       }
 
@@ -204,6 +224,8 @@
         const currentIndex =
           document.querySelector(".word-card").dataset.currentIndex;
         const currentWord = selectedWords[currentIndex];
+        currentWord.wrongAttempts++;
+        logWordChance();
         const feedback = document.querySelector(".feedback");
         feedback.innerText = `Answer: ${currentWord.spanish}`;
         feedback.style.color = "blue";
@@ -249,7 +271,15 @@
             id="timeCheckbox"
             onclick="updateSelectedWords()"
           />
-          Days, Months, Years</label
+          Time words</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            id="colorsCheckbox"
+            onclick="updateSelectedWords()"
+          />
+          Colors</label
         >
       </div>
       <div class="word-card" data-current-index="0">
