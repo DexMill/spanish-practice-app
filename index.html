@@ -181,16 +181,6 @@
         document.querySelector(".feedback").innerText = "";
       }
 
-      function previousWord() {
-        loadWord();
-        document.querySelector(".feedback").innerText = "";
-      }
-
-      function resetWord() {
-        loadWord();
-        document.querySelector(".feedback").innerText = "";
-      }
-
       function insertSpecialChar(char) {
         const input = document.querySelector(".word-card input");
         input.value += char;
@@ -240,8 +230,6 @@
           <input type="text" placeholder="Type the Spanish translation" />
           <button onclick="checkAnswer()">Check</button>
           <button onclick="nextWord()">Next</button>
-          <button onclick="previousWord()">Back</button>
-          <button onclick="resetWord()">Reset</button>
         </div>
       </div>
       <div class="feedback"></div>
