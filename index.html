@@ -41,6 +41,7 @@
       }
       .tabs {
         display: flex;
+        flex-wrap: wrap;
         gap: 10px;
         margin-bottom: 20px;
       }
@@ -123,6 +124,31 @@
         { english: "black", spanish: "negro", wrongAttempts: 0 },
         { english: "white", spanish: "blanco", wrongAttempts: 0 },
         { english: "gray", spanish: "gris", wrongAttempts: 0 },
+      ];
+
+      const days_of_the_week = [
+        { english: "monday", spanish: "lunes", wrongAttempts: 0 },
+        { english: "tuesday", spanish: "martes", wrongAttempts: 0 },
+        { english: "wednesday", spanish: "miércoles", wrongAttempts: 0 },
+        { english: "thursday", spanish: "jueves", wrongAttempts: 0 },
+        { english: "friday", spanish: "viernes", wrongAttempts: 0 },
+        { english: "saturday", spanish: "sábado", wrongAttempts: 0 },
+        { english: "sunday", spanish: "domingo", wrongAttempts: 0 },
+      ];
+
+      const months = [
+        { english: "january", spanish: "enero", wrongAttempts: 0 },
+        { english: "february", spanish: "febrero", wrongAttempts: 0 },
+        { english: "march", spanish: "marzo", wrongAttempts: 0 },
+        { english: "april", spanish: "abril", wrongAttempts: 0 },
+        { english: "may", spanish: "mayo", wrongAttempts: 0 },
+        { english: "june", spanish: "junio", wrongAttempts: 0 },
+        { english: "july", spanish: "julio", wrongAttempts: 0 },
+        { english: "august", spanish: "agosto", wrongAttempts: 0 },
+        { english: "september", spanish: "septiembre", wrongAttempts: 0 },
+        { english: "october", spanish: "octubre", wrongAttempts: 0 },
+        { english: "november", spanish: "noviembre", wrongAttempts: 0 },
+        { english: "december", spanish: "diciembre", wrongAttempts: 0 },
       ];
 
       let selectedWords = [];
@@ -217,6 +243,12 @@
         if (document.getElementById("colorsCheckbox").checked) {
           selectedWords = selectedWords.concat(colors);
         }
+        if (document.getElementById("daysCheckbox").checked) {
+          selectedWords = selectedWords.concat(days_of_the_week);
+        }
+        if (document.getElementById("monthsCheckbox").checked) {
+          selectedWords = selectedWords.concat(months);
+        }
         loadWord();
       }
 
@@ -257,30 +289,46 @@
     <div class="container">
       <h1>Spanish Practice</h1>
       <div class="tabs">
-        <label
-          ><input
+        <label>
+          <input
             type="checkbox"
             id="classroomCheckbox"
             onclick="updateSelectedWords()"
           />
-          Classroom Objects</label
-        >
-        <label
-          ><input
+          Classroom Objects
+        </label>
+        <label>
+          <input
             type="checkbox"
             id="timeCheckbox"
             onclick="updateSelectedWords()"
           />
-          Time words</label
-        >
-        <label
-          ><input
+          Time words
+        </label>
+        <label>
+          <input
             type="checkbox"
             id="colorsCheckbox"
             onclick="updateSelectedWords()"
           />
-          Colors</label
-        >
+          Colors
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="daysCheckbox"
+            onclick="updateSelectedWords()"
+          />
+          Days of the week
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="monthsCheckbox"
+            onclick="updateSelectedWords()"
+          />
+          Months
+        </label>
       </div>
       <div class="word-card" data-current-index="0">
         <div class="english"></div>
