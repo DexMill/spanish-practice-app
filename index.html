@@ -128,6 +128,7 @@
         wordCard.querySelector(".english").innerText = selectedWord.english;
         wordCard.querySelector("input").value = "";
         wordCard.dataset.currentIndex = selectedWords.indexOf(selectedWord);
+        logWordChance();
       }
 
       function checkAnswer() {
@@ -153,6 +154,7 @@
           } else {
             feedback.innerText = "";
           }
+          logWordChance();
         }
       }
 
@@ -198,6 +200,32 @@
         loadWord();
       }
 
+      function revealAnswer() {
+        const currentIndex =
+          document.querySelector(".word-card").dataset.currentIndex;
+        const currentWord = selectedWords[currentIndex];
+        const feedback = document.querySelector(".feedback");
+        feedback.innerText = `Answer: ${currentWord.spanish}`;
+        feedback.style.color = "blue";
+      }
+
+      function logWordChance() {
+        selectedWords.forEach((word) => {
+          const weightedWords = selectedWords.flatMap((w) =>
+            Array(w.wrongAttempts + 1).fill(w)
+          );
+          const chance =
+            (weightedWords.filter((w) => w === word).length /
+              weightedWords.length) *
+            100;
+          console.log(
+            `Word: ${word.english}, Wrong Attempts: ${
+              word.wrongAttempts
+            }, Chance: ${chance.toFixed(2)}%`
+          );
+        });
+      }
+
       document.addEventListener("DOMContentLoaded", () => {
         updateSelectedWords();
       });
@@ -230,6 +258,7 @@
           <input type="text" placeholder="Type the Spanish translation" />
           <button onclick="checkAnswer()">Check</button>
           <button onclick="nextWord()">Next</button>
+          <button onclick="revealAnswer()">Reveal</button>
         </div>
       </div>
       <div class="feedback"></div>
