@@ -59,28 +59,56 @@
     </style>
     <script>
       const classroomWords = [
-        { english: "the pen", spanish: "el bolígrafo" },
-        { english: "the folder", spanish: "la carpeta" },
-        { english: "the notebook", spanish: "el cuaderno" },
-        { english: "the male student", spanish: "el estudiante" },
-        { english: "the female student", spanish: "la estudiante" },
-        { english: "the sheet of paper", spanish: "la hoja de papel" },
-        { english: "the pencil", spanish: "el lápiz" },
-        { english: "the book", spanish: "el libro" },
-        { english: "the male teacher", spanish: "el profesor" },
-        { english: "the female teacher", spanish: "la profesora" },
-        { english: "the student desk", spanish: "el pupitre" },
-        { english: "the classroom", spanish: "la sala de clases" },
+        { english: "the pen", spanish: "el bolígrafo", wrongAttempts: 0 },
+        { english: "the folder", spanish: "la carpeta", wrongAttempts: 0 },
+        { english: "the notebook", spanish: "el cuaderno", wrongAttempts: 0 },
+        {
+          english: "the male student",
+          spanish: "el estudiante",
+          wrongAttempts: 0,
+        },
+        {
+          english: "the female student",
+          spanish: "la estudiante",
+          wrongAttempts: 0,
+        },
+        {
+          english: "the sheet of paper",
+          spanish: "la hoja de papel",
+          wrongAttempts: 0,
+        },
+        { english: "the pencil", spanish: "el lápiz", wrongAttempts: 0 },
+        { english: "the book", spanish: "el libro", wrongAttempts: 0 },
+        {
+          english: "the male teacher",
+          spanish: "el profesor",
+          wrongAttempts: 0,
+        },
+        {
+          english: "the female teacher",
+          spanish: "la profesora",
+          wrongAttempts: 0,
+        },
+        {
+          english: "the student desk",
+          spanish: "el pupitre",
+          wrongAttempts: 0,
+        },
+        {
+          english: "the classroom",
+          spanish: "la sala de clases",
+          wrongAttempts: 0,
+        },
       ];
 
       const timeWords = [
-        { english: "today", spanish: "hoy" },
-        { english: "tomorrow", spanish: "mañana" },
-        { english: "yesterday", spanish: "ayer" },
-        { english: "the day", spanish: "el día" },
-        { english: "the week", spanish: "la semana" },
-        { english: "the month", spanish: "el mes" },
-        { english: "the year", spanish: "el año" },
+        { english: "today", spanish: "hoy", wrongAttempts: 0 },
+        { english: "tomorrow", spanish: "mañana", wrongAttempts: 0 },
+        { english: "yesterday", spanish: "ayer", wrongAttempts: 0 },
+        { english: "the day", spanish: "el día", wrongAttempts: 0 },
+        { english: "the week", spanish: "la semana", wrongAttempts: 0 },
+        { english: "the month", spanish: "el mes", wrongAttempts: 0 },
+        { english: "the year", spanish: "el año", wrongAttempts: 0 },
       ];
 
       let selectedWords = [];
@@ -92,11 +120,14 @@
           return;
         }
         const wordCard = document.querySelector(".word-card");
-        const randomIndex = Math.floor(Math.random() * selectedWords.length);
-        wordCard.querySelector(".english").innerText =
-          selectedWords[randomIndex].english;
+        const weightedWords = selectedWords.flatMap((word) =>
+          Array(word.wrongAttempts + 1).fill(word)
+        );
+        const randomIndex = Math.floor(Math.random() * weightedWords.length);
+        const selectedWord = weightedWords[randomIndex];
+        wordCard.querySelector(".english").innerText = selectedWord.english;
         wordCard.querySelector("input").value = "";
-        wordCard.dataset.currentIndex = randomIndex;
+        wordCard.dataset.currentIndex = selectedWords.indexOf(selectedWord);
       }
 
       function checkAnswer() {
@@ -109,13 +140,14 @@
         }
         const currentIndex =
           document.querySelector(".word-card").dataset.currentIndex;
+        const currentWord = selectedWords[currentIndex];
         if (
-          input.value.trim().toLowerCase() ===
-          selectedWords[currentIndex].spanish.toLowerCase()
+          input.value.trim().toLowerCase() === currentWord.spanish.toLowerCase()
         ) {
           feedback.innerText = "Correct!";
           feedback.style.color = "green";
         } else {
+          currentWord.wrongAttempts++;
           if (confirm("Incorrect. Would you like a hint?")) {
             showHint(input.value);
           } else {
