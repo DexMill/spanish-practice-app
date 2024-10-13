@@ -151,6 +151,37 @@
         { english: "december", spanish: "diciembre", wrongAttempts: 0 },
       ];
 
+      const numbers = [
+        { english: "one", spanish: "uno", wrongAttempts: 0 },
+        { english: "two", spanish: "dos", wrongAttempts: 0 },
+        { english: "three", spanish: "tres", wrongAttempts: 0 },
+        { english: "four", spanish: "cuatro", wrongAttempts: 0 },
+        { english: "five", spanish: "cinco", wrongAttempts: 0 },
+        { english: "six", spanish: "seis", wrongAttempts: 0 },
+        { english: "seven", spanish: "siete", wrongAttempts: 0 },
+        { english: "eight", spanish: "ocho", wrongAttempts: 0 },
+        { english: "nine", spanish: "nueve", wrongAttempts: 0 },
+        { english: "ten", spanish: "diez", wrongAttempts: 0 },
+        { english: "eleven", spanish: "once", wrongAttempts: 0 },
+        { english: "twelve", spanish: "doce", wrongAttempts: 0 },
+        { english: "thirteen", spanish: "trece", wrongAttempts: 0 },
+        { english: "fourteen", spanish: "catorce", wrongAttempts: 0 },
+        { english: "fifteen", spanish: "quince", wrongAttempts: 0 },
+        { english: "sixteen", spanish: "dieciséis", wrongAttempts: 0 },
+        { english: "seventeen", spanish: "diecisiete", wrongAttempts: 0 },
+        { english: "eighteen", spanish: "dieciocho", wrongAttempts: 0 },
+        { english: "nineteen", spanish: "diecinueve", wrongAttempts: 0 },
+        { english: "twenty", spanish: "veinte", wrongAttempts: 0 },
+        { english: "thirty", spanish: "treinta", wrongAttempts: 0 },
+        { english: "forty", spanish: "cuarenta", wrongAttempts: 0 },
+        { english: "fifty", spanish: "cincuenta", wrongAttempts: 0 },
+        { english: "sixty", spanish: "sesenta", wrongAttempts: 0 },
+        { english: "seventy", spanish: "setenta", wrongAttempts: 0 },
+        { english: "eighty", spanish: "ochenta", wrongAttempts: 0 },
+        { english: "ninety", spanish: "noventa", wrongAttempts: 0 },
+        { english: "one hundred", spanish: "cien", wrongAttempts: 0 },
+      ];
+
       let selectedWords = [];
 
       function loadWord() {
@@ -249,6 +280,9 @@
         if (document.getElementById("monthsCheckbox").checked) {
           selectedWords = selectedWords.concat(months);
         }
+        if (document.getElementById("numbersCheckbox").checked) {
+          selectedWords = selectedWords.concat(numbers);
+        }
         loadWord();
       }
 
@@ -328,6 +362,14 @@
             onclick="updateSelectedWords()"
           />
           Months
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="numbersCheckbox"
+            onclick="updateSelectedWords()"
+          />
+          Numbers
         </label>
       </div>
       <div class="word-card" data-current-index="0">
