@@ -190,6 +190,159 @@
         { english: "ninety", spanish: "noventa", wrongAttempts: 0 },
         { english: "one hundred", spanish: "cien", wrongAttempts: 0 },
       ];
+      const time = [
+        {
+          english: "12:30 pm",
+          spanish: "Son las doce y media de la tarde",
+          wrongAttempts: 0,
+        },
+        {
+          english: "12:30 am",
+          spanish: "Son las doce y media de la noche",
+          wrongAttempts: 0,
+        },
+        {
+          english: "1:56 pm",
+          spanish: "Es el una y cincuenta y seis de la tarde",
+          wrongAttempts: 0,
+        },
+        {
+          english: "1:40 am",
+          spanish: "Es el una y cuarenta de la noche",
+          wrongAttempts: 0,
+        },
+        {
+          english: "2:20 pm",
+          spanish: "Son las dos y veinte de la tarde",
+          wrongAttempts: 0,
+        },
+        {
+          english: "2:30 am",
+          spanish: "Son las dos y media de la noche",
+          wrongAttempts: 0,
+        },
+        {
+          english: "3:35 pm",
+          spanish: "Son las tres y treinta y cinco de la tarde",
+          wrongAttempts: 0,
+        },
+        {
+          english: "3:23 am",
+          spanish: "Son las tres y veintitrés de la mañana",
+          wrongAttempts: 0,
+        },
+        {
+          english: "4:53 pm",
+          spanish: "Son las cuatro y cincuenta y tres de la tarde",
+          wrongAttempts: 0,
+        },
+        {
+          english: "4:41 am",
+          spanish: "Son las cuatro y cuarenta y uno de la mañana",
+          wrongAttempts: 0,
+        },
+        {
+          english: "5:56 pm",
+          spanish: "Son las cinco y cincuenta y seis de la tarde",
+          wrongAttempts: 0,
+        },
+        {
+          english: "5:15 am",
+          spanish: "Son las cinco y cuarto de la mañana",
+          wrongAttempts: 0,
+        },
+        {
+          english: "6:04 pm",
+          spanish: "Son las seis y cuatro de la tarde",
+          wrongAttempts: 0,
+        },
+        {
+          english: "6:12 am",
+          spanish: "Son las seis y doce de la mañana",
+          wrongAttempts: 0,
+        },
+        ,
+        {
+          spanish: "Son las siete y veinte de la mañana",
+          english: "7:20 am",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Son las ocho y cuarenta y cinco de la noche",
+          english: "8:45 pm",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Son las nueve y treinta de la mañana",
+          english: "9:30 am",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Son las diez y diez de la noche",
+          english: "10:10 pm",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Son las once y cincuenta y cinco de la mañana",
+          english: "11:55 am",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Es la una y cinco de la tarde",
+          english: "1:05 pm",
+          wrongAttempts: 0,
+        },
+        {
+          english: "Es la una menos cuarto de la noche",
+          spanish: "1:45 am",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Son las dos y veinte de la tarde",
+          english: "2:20 pm",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Son las tres y cuarto de la tarde",
+          english: "3:15 pm",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Es el medianoche",
+          english: "Mid night",
+          wrongAttempts: 0,
+        },
+        {
+          english: "Son las cuatro menos diez de la mañana",
+          spanish: "3:50 am",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Son las cinco y media de la tarde",
+          english: "5:30 pm",
+          wrongAttempts: 0,
+        },
+        {
+          english: "Son las siete menos cuarto de la noche",
+          spanish: "6:45 pm",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Es el mediodía",
+          english: "mid day(noon)",
+          wrongAttempts: 0,
+        },
+        {
+          spanish: "Son las nueve y cuarto de la noche",
+          english: "9:15 pm",
+          wrongAttempts: 0,
+        },
+        {
+          english: "Son las once menos cinco de la mañana",
+          spanish: "10:55 am",
+          wrongAttempts: 0,
+        },
+      ];
 
       let selectedWords = [];
 
@@ -277,7 +430,7 @@
         if (document.getElementById("classroomCheckbox").checked) {
           selectedWords = selectedWords.concat(classroomWords);
         }
-        if (document.getElementById("timeCheckbox").checked) {
+        if (document.getElementById("timeWordsCheckbox").checked) {
           selectedWords = selectedWords.concat(timeWords);
         }
         if (document.getElementById("colorsCheckbox").checked) {
@@ -291,6 +444,9 @@
         }
         if (document.getElementById("numbersCheckbox").checked) {
           selectedWords = selectedWords.concat(numbers);
+        }
+        if (document.getElementById("timeCheckbox").checked) {
+          selectedWords = selectedWords.concat(time);
         }
         loadWord();
       }
@@ -343,7 +499,7 @@
         <label>
           <input
             type="checkbox"
-            id="timeCheckbox"
+            id="timeWordsCheckbox"
             onclick="updateSelectedWords()"
           />
           Time words
@@ -379,6 +535,14 @@
             onclick="updateSelectedWords()"
           />
           Numbers
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="timeCheckbox"
+            onclick="updateSelectedWords()"
+          />
+          Time
         </label>
       </div>
       <div class="word-card" data-current-index="0">
