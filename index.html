@@ -342,6 +342,87 @@
           spanish: "10:55 am",
           wrongAttempts: 0,
         },
+        {
+          english: "7:05 am",
+          spanish: "Son las siete y cinco de la mañana",
+          wrongAttempts: 0,
+        },
+        {
+          english: "11:30 pm",
+          spanish: "Son las once y media de la noche",
+          wrongAttempts: 0,
+        },
+        {
+          english: "2:40 pm",
+          spanish: "Son las dos y cuarenta de la tarde",
+          wrongAttempts: 0,
+        },
+        {
+          english: "8:55 am",
+          spanish: "Son las nueve menos cinco de la mañana",
+          wrongAttempts: 0,
+        },
+        {
+          english: "6:20 pm",
+          spanish: "Son las seis y veinte de la tarde",
+          wrongAttempts: 0,
+        },
+        {
+          english: "1:15 am",
+          spanish: "Es la una y cuarto de la madrugada",
+          wrongAttempts: 0,
+        },
+        {
+          english: "10:45 am",
+          spanish: "Son las once menos cuarto de la mañana",
+          wrongAttempts: 0,
+        },
+        {
+          english: "4:30 pm",
+          spanish: "Son las cuatro y media de la tarde",
+          wrongAttempts: 0,
+        },
+        {
+          english: "9:50 pm",
+          spanish: "Son las diez menos diez de la noche",
+          wrongAttempts: 0,
+        },
+        {
+          english: "3:05 am",
+          spanish: "Son las tres y cinco de la madrugada",
+          wrongAttempts: 0,
+        },
+      ];
+      const seasons = [
+        { english: "spring", spanish: "primavera", wrongAttempts: 0 },
+        { english: "summer", spanish: "verano", wrongAttempts: 0 },
+        { english: "fall", spanish: "otoño", wrongAttempts: 0 },
+        { english: "winter", spanish: "invierno", wrongAttempts: 0 },
+      ];
+      const weather = [
+        { english: "sunny", spanish: "hace sol", wrongAttempts: 0 },
+        { english: "rainy", spanish: "llueve", wrongAttempts: 0 },
+        { english: "cloudy", spanish: "está nublado", wrongAttempts: 0 },
+        { english: "windy", spanish: "hace viento", wrongAttempts: 0 },
+        { english: "snowy", spanish: "nieve", wrongAttempts: 0 },
+        { english: "hot", spanish: "hace calor", wrongAttempts: 0 },
+        { english: "cold", spanish: "hace frío", wrongAttempts: 0 },
+        { english: "cool", spanish: "hace fresco", wrongAttempts: 0 },
+        {
+          english: "good weather",
+          spanish: "hace buen tiempo",
+          wrongAttempts: 0,
+        },
+        {
+          english: "bad weather",
+          spanish: "hace mal tiempo",
+          wrongAttempts: 0,
+        },
+        {
+          english: "so-so weather",
+          spanish: "está mas o menos",
+          wrongAttempts: 0,
+        },
       ];
 
       let selectedWords = [];
@@ -448,6 +529,12 @@
         if (document.getElementById("timeCheckbox").checked) {
           selectedWords = selectedWords.concat(time);
         }
+        if (document.getElementById("weatherCheckbox").checked) {
+          selectedWords = selectedWords.concat(weather);
+        }
+        if (document.getElementById("seasonsCheckbox").checked) {
+          selectedWords = selectedWords.concat(seasons);
+        }
         loadWord();
       }
 
@@ -543,6 +630,22 @@
             onclick="updateSelectedWords()"
           />
           Time
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="weatherCheckbox"
+            onclick="updateSelectedWords()"
+          />
+          Weather
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="seasonsCheckbox"
+            onclick="updateSelectedWords()"
+          />
+          Seasons
         </label>
       </div>
       <div class="word-card" data-current-index="0">
